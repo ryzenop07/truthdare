@@ -6,7 +6,23 @@ from prompts import get_random_truth, get_random_dare
 game = TruthDareGame()
 
 def start(update, context):
-    update.message.reply_text("Welcome to Truth & Dare Bot! Use /newgame to begin.")
+    keyboard = [
+        [InlineKeyboardButton("🌀 New Game", callback_data='newgame')],
+        [InlineKeyboardButton("🔍 Truth", callback_data='truth'), InlineKeyboardButton("🔥 Dare", callback_data='dare')],
+        [InlineKeyboardButton("⏭️ Next", callback_data='next')],
+    ]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+
+    update.message.reply_text(
+        "🎉 *Welcome to Truth & Dare!* 🎯\n\n"
+        "Use the buttons or commands below to play:\n"
+        "• `/newgame` – Start a new game\n"
+        "• `/join` – Join the game\n"
+        "• `/begin` – Begin the game\n"
+        "• `/end` – End the game\n",
+        reply_markup=reply_markup,
+        parse_mode=ParseMode.MARKDOWN
+    )
 
 def new_game(update, context):
     game.reset()
