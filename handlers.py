@@ -1,5 +1,6 @@
 from telegram.ext import CommandHandler
 from game import TruthDareGame
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ParseMode
 from prompts import get_random_truth, get_random_dare
 
 game = TruthDareGame()
