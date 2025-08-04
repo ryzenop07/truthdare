@@ -6,6 +6,7 @@ from telegram.ext import CommandHandler
 from config import BOT_TOKEN
 
 def main():
+    dp.add_handler(CallbackQueryHandler(button_handler))
     updater = Updater(BOT_TOKEN, use_context=True)
     dp = updater.dispatcher
 
