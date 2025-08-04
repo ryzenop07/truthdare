@@ -1,15 +1,15 @@
-from telegram.ext import Updater
-from telegram.ext import CallbackQueryHandler
-from handlers import *
-
-from telegram.ext import CommandHandler
+from telegram.ext import Updater, CommandHandler, CallbackQueryHandler
 from config import BOT_TOKEN
+from handlers import *  # Import your handler functions (start, join, etc.)
 
 def main():
-    dp.add_handler(CallbackQueryHandler(button_handler))
     updater = Updater(BOT_TOKEN, use_context=True)
-    dp = updater.dispatcher
+    dp = updater.dispatcher  # ✅ Must define this BEFORE using dp
 
+    # ✅ Register callback query handler for buttons
+    dp.add_handler(CallbackQueryHandler(button_handler))
+
+    # ✅ Register command handlers
     dp.add_handler(CommandHandler("start", start))
     dp.add_handler(CommandHandler("newgame", new_game))
     dp.add_handler(CommandHandler("join", join))
