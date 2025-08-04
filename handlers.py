@@ -68,3 +68,24 @@ def next_turn(update, context):
 def end_game(update, context):
     game.reset()
     update.message.reply_text("❌ Game ended.")
+
+def button_handler(update, context):
+    query = update.callback_query
+    query.answer()
+
+    data = query.data
+    user = query.from_user.first_name
+
+    if data == 'truth':
+        query.edit_message_text(f"🧠 *{user}, your Truth:* \n\n_{get_random_truth()}_", parse_mode=ParseMode.MARKDOWN)
+    elif data == 'dare':
+        query.edit_message_text(f"🔥 *{user}, your Dare:* \n\n_{get_random_dare()}_", parse_mode=ParseMode.MARKDOWN)
+    elif data == 'next':
+        next_player = game.next_player()
+        query.edit_message_text(f"⏭️ It's now *{next_player}'s* turn!\nChoose one:", parse_mode=ParseMode.MARKDOWN, reply_markup=InlineKeyboardMarkup([
+            [InlineKeyboardButton("🔍 Truth", callback_data='truth'), InlineKeyboardButton("🔥 Dare", callback_data='dare')]
+        ]))
+    elif data == 'newgame':
+        game.reset()
+        query.edit_message_text("🌀 New game started! Players type /join to join!", parse_mode=ParseMode.MARKDOWN)
+
